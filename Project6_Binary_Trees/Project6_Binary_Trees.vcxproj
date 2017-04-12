@@ -110,6 +110,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="TreeClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Project6.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="SampleInput.txt" />
+    <Text Include="tree_in.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
