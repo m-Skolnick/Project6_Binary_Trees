@@ -76,19 +76,54 @@ void processData(ifstream&dataIN) {
 	// Task - Process data from the input file
 	// Returns - A binary tree filled with data from the input file
 
-	char code;
-
+	char code,newName[21];
+	bool opSuccessful;
+	int newQuantity;
 	dataIN >> ws >> code; //Seed read first command code
 	
 
-	while (code == 'I' || code == 'D') {
+	while (code != 'Q') {
 		NodeType newNode;
 		if (code == 'I') { //If the code is 'I' Insert a node
-				//Read in each of the elements of the new node
-			dataIN >> newNode.ID >> newNode.Name >> newNode.QOnHand >> newNode.QOnOrder;
+				
+			dataIN >> newNode.ID; //Read in the ID of the new node
+			dataIN.getline(newName, 20); // Read in the new name to a character array
+			newNode.Name = newName; // Add char array to node as the name
+			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
 				//Insert the node into the tree
 			iTree.insert(newNode);
+		}
+		else if (code == 'D') {
+			dataIN >> newNode.ID; //Read in the ID of the new node
+			dataIN.getline(newName, 20); // Read in the new name to a character array
+			newNode.Name = newName; // Add char array to node as the name
 
+			// MISSING DELETE FUNCTION
+		}
+		else if (code == 'P') {
+			dataIN >> code;
+			if (code == 'E') {
+
+				//printEntireTree();
+				//PRINT ENTIRE TREE
+			}
+			if (code == 'N') {
+				dataIN >> newNode.ID;
+				//printNode(newNode);
+				//PRINT ENTIRE TREE
+			}
+			
+		}
+		else if (code == 'S') {
+			dataIN >> newNode.ID >> newQuantity;
+			
+			//opSuccessful = updateIOnHand(newNode,)
+		}
+		else if (code == 'O') {
+			dataIN >> newNode.ID >> newQuantity;
+		}
+		else if (code == 'R') {
+			dataIN >> newNode.ID >> newQuantity;
 		}
 
 
