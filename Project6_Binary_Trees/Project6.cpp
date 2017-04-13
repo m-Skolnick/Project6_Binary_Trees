@@ -73,61 +73,63 @@ void Footer(ofstream &Outfile)
 }
 //************************************* END OF FUNCTION FOOTER  ***************************************
 void printMessage(char opType, string IDtoPrint, bool opSuccess) {
-
-	if (opSuccess) {
+		//Receives – The type of operation, ID to print, and whether operation was successful
+		//Task - Print a message to the user indicating whether operation succeeded
+		//Returns - Nothing
+	if (opSuccess) { //Print the corresponding message if the operation was successful
 		if (opType == 'I') {
 			dataOUT << "Item ID Number " << IDtoPrint << " successfully entered into database.";
-
-
 		}
-		if (opType == 'D') {
+		else if (opType == 'D') {
 			dataOUT << "Item ID Number " << IDtoPrint << " successfully deleted from database.";
-			
 		}
-		if (opType == 'P') {
-
-		}
-		else {
+		else if (opType == 'S' || opType == 'R'){
 			dataOUT << "Quantity on Hand for item " << IDtoPrint << " successfully updated.";
-
 		}
-		
+		else if (opType == 'O') {
+			dataOUT << "Quantity on order for item " << IDtoPrint << " successfully updated.";
+		}
+		else {	return; }		
 	}
-	else {
+	else { //Print the corresponding message if the operation failed
 		if (opType == 'I') {
 			dataOUT << "ERROR - Attempt to insert a duplicate item " << IDtoPrint << " into the database.";
-
-
 		}
 		if (opType == 'D') {
 			dataOUT << "ERROR - Attempt to delete an item " << IDtoPrint << " not in the database list.";
-
 		}
 		if (opType == 'P') {
 			dataOUT << "Item " << IDtoPrint << " not in database. Print failed.";
 		}
 		else {
 			dataOUT << "Item " << IDtoPrint << " not in database. Data not updated.";
-
 		}
-
 	}
-	dataOUT << endl;
-	lineCount++;
+	dataOUT << endl; //Add a line after printing output message
+	lineCount++; //Increment the line counter
+}
+//*****************************************************************************************************
+void printHeaderForAll() {
+		//Receives – Nothing
+		//Task - Prints a header for when entire tree is printed
+		//Returns - Nothing
+	dataOUT << "	               JAKE’S HARDWARE INVENTORY REPORT" << endl;
+	dataOUT << "	Item             Item                    Quantity       Quantity" << endl;
+	dataOUT << "	ID Number        Description             On hand        On Order" << endl;
+	dataOUT << "	----------------------------------------------------------------" << endl;
+	lineCount += 4; // Increment line counter
+
 }
 //*****************************************************************************************************
 void processData(ifstream&dataIN) {
-	// Receives – The input file
-	// Task - Process data from the input file
-	// Returns - A binary tree filled with data from the input file
-
-	char code,newName[21];
+		//Receives – The input file
+		//Task - Process data from the input file
+		//Returns - A binary tree filled with data from the input file
+	char code,code2,newName[21];
 	bool opSuccess;
 	int newQuantity;
 	string IDtoSearch;
 	dataIN >> ws >> code; //Seed read first command code
-	
-
 	while (code != 'Q') {
 		NodeType newNode;
 		if (code == 'I') { //If the code is 'I' Insert a node
@@ -138,24 +140,24 @@ void processData(ifstream&dataIN) {
 			newNode.Name = newName; // Add char array to node as the name
 			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
 				//Insert the node into the tree
-			opSuccess = true; //Just to test (need to delete)
-			//opSuccess = iTree.insert(newNode);
+			opSuccess = iTree.insert(newNode);
 		}
 		else if (code == 'D') {
-			dataIN >> newNode.ID >> ws; //Read in the ID of the new node
+			dataIN >> IDtoSearch >> ws; //Read in the ID of the node to delete
 			dataIN.getline(newName, 20); // Read in the new name to a character array
-			newNode.Name = newName; // Add char array to node as the name
+			
 
 			// MISSING DELETE FUNCTION
 		}
 		else if (code == 'P') {
-			dataIN >> code;
-			if (code == 'E') {
+			dataIN >> code2;
+			if (code2 == 'E') {
 
+				printHeaderForAll(); //Print a header for the tree printout
 				//printEntireTree();
 				//PRINT ENTIRE TREE
 			}
-			if (code == 'N') {
+			if (code2 == 'N') {
 				dataIN >> IDtoSearch;
 				//printNode(iTree.findNode(IDtoSearch));
 				//PRINT ENTIRE TREE

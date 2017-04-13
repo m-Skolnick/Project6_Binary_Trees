@@ -18,7 +18,7 @@ struct NodeType {
 		// The structure "NodeType" holds each inventory file.
 	int QOnHand, QOnOrder;
 	string ID,Name;
-	NodeType *lChild,*rChild,*parent;
+	NodeType *Lptr,*Rptr,*parent;
 
 };
 class BinaryTreeClass {
@@ -26,6 +26,7 @@ public:
 	BinaryTreeClass();
 	bool isEmpty();
 	bool insert(NodeType);
+	bool insertNode(NodeType);
 	NodeType findNode(string);
 private:
 	NodeType *RootPtr;
@@ -54,20 +55,83 @@ inline bool BinaryTreeClass::isEmpty()
 inline bool BinaryTreeClass::insert(NodeType newNode){
 
 	NodeType *newPtr = new(NodeType);
-	if (isEmpty()) {
-		newPtr = RootPtr;
-	}
+	NodeType *StartPtr = new(NodeType);
+	
 
 	newPtr->ID = newNode.ID;
 	newPtr->Name = newNode.Name;
-	newPtr->ID = newNode.QOnHand;
-	newPtr->ID = newNode.QOnOrder;
+	newPtr->QOnHand = newNode.QOnHand;
+	newPtr->QOnOrder = newNode.QOnOrder;
 
-	return false;
+	if (isEmpty()) { //If the tree is empty, place the node at the root and return true;
+		RootPtr = newPtr;
+		RootPtr->Lptr = NULL;
+		RootPtr->Rptr = NULL;
+		return true;
+	}
+	else if (findNode(newPtr->ID).ID == "NOT FOUND") {
+
+		StartPtr = RootPtr;
+
+		if (RootPtr->ID < newPtr->ID) {
+
+		}
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-inline NodeType BinaryTreeClass::findNode(string){
+	// This is not being used right now.. need to combine with insert node above!
+bool BinaryTreeClass::insertNode(NodeType newNode)  
+{
+	bool inserted = false;
+	NodeType  *newPtr, *currPtr;
+	newPtr = new NodeType;        //
+	if (newPtr != NULL)
+	{
+		newPtr->ID = newNode.ID;
+		newPtr->Name = newNode.Name;
+		newPtr->QOnHand = newNode.QOnHand;
+		newPtr->QOnOrder = newNode.QOnOrder;  // 
+		newPtr -> Lptr = NULL;   //        
+		newPtr -> Rptr = NULL;   //        
+		currPtr = RootPtr;
+		while (inserted == false)
+		{
+			if (currPtr == NULL)
+			{
+				RootPtr = newPtr;
+				inserted = true;                          
+			}                                           
+			else                        
+			{
+				if (newPtr->ID < currPtr ->ID)
+					if (currPtr->Lptr != NULL)
+						currPtr = currPtr->Lptr;
+					else
+					{
+						currPtr->Lptr = newPtr;
+						inserted = true;
+					}
+				else
+					if (currPtr->Rptr != NULL)
+						currPtr = currPtr->Rptr;
+					else
+					{
+						currPtr->Rptr = newPtr;
+						inserted = true;
+					}
+			}
+		}  
+	}   
+}  
+inline NodeType BinaryTreeClass::findNode(string IDtoSearch){
+	NodeType *nodeToReturn = new(NodeType);
+	nodeToReturn->ID = "NOT FOUND";
 
 
-	return NodeType();
+
+	return *nodeToReturn;
 }
