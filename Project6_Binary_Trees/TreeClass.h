@@ -7,9 +7,13 @@
 //*    MODULES     :  *************NEED TO DO THIS***********************                    *
 //*                                                                                                   *
 //*****************************************************************************************************
+#ifndef TREECLASS_H
+#define TREECLASS_H
+#include "Variables.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+
 
 using namespace std;
 
@@ -28,6 +32,8 @@ public:
 	bool insert(NodeType);
 	bool insertNode(NodeType);
 	NodeType findNode(string);
+	void printEntireTree();
+	void printEachNode(NodeType*);
 private:
 	NodeType *RootPtr;
 };
@@ -82,10 +88,13 @@ inline bool BinaryTreeClass::insert(NodeType newNode){
 		return false;
 	}
 }
+//*****************************************************************************************************
 
-	// This is not being used right now.. need to combine with insert node above!
-bool BinaryTreeClass::insertNode(NodeType newNode)  
-{
+
+bool BinaryTreeClass::insertNode(NodeType newNode){
+
+
+	
 	bool inserted = false;
 	NodeType  *newPtr, *currPtr;
 	newPtr = new NodeType;        //
@@ -103,7 +112,7 @@ bool BinaryTreeClass::insertNode(NodeType newNode)
 			if (currPtr == NULL)
 			{
 				RootPtr = newPtr;
-				inserted = true;                          
+				return true;                          
 			}                                           
 			else                        
 			{
@@ -113,7 +122,7 @@ bool BinaryTreeClass::insertNode(NodeType newNode)
 					else
 					{
 						currPtr->Lptr = newPtr;
-						inserted = true;
+						return true;
 					}
 				else
 					if (currPtr->Rptr != NULL)
@@ -121,12 +130,15 @@ bool BinaryTreeClass::insertNode(NodeType newNode)
 					else
 					{
 						currPtr->Rptr = newPtr;
-						inserted = true;
+						return true;
 					}
 			}
 		}  
 	}   
+	return false;
 }  
+//*****************************************************************************************************
+
 inline NodeType BinaryTreeClass::findNode(string IDtoSearch){
 	NodeType *nodeToReturn = new(NodeType);
 	nodeToReturn->ID = "NOT FOUND";
@@ -135,3 +147,23 @@ inline NodeType BinaryTreeClass::findNode(string IDtoSearch){
 
 	return *nodeToReturn;
 }
+//*****************************************************************************************************
+
+inline void BinaryTreeClass::printEntireTree(){
+
+	printEachNode(RootPtr);
+	
+}
+//*****************************************************************************************************
+
+inline void BinaryTreeClass::printEachNode(NodeType *root) {
+	if (root != NULL) {
+		printEachNode(root->Lptr);
+
+		dataOUT << "    " << left << setw(17) << root->ID  << setw(24) << root->Name 
+			<< setw(15) << root->QOnHand << root->QOnOrder << endl;
+		printEachNode(root->Rptr);
+	}
+}
+
+#endif

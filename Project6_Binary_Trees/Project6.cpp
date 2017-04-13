@@ -121,7 +121,7 @@ void printHeaderForAll() {
 
 }
 //*****************************************************************************************************
-void processData(ifstream&dataIN) {
+void processData() {
 		//Receives – The input file
 		//Task - Process data from the input file
 		//Returns - A binary tree filled with data from the input file
@@ -140,7 +140,7 @@ void processData(ifstream&dataIN) {
 			newNode.Name = newName; // Add char array to node as the name
 			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
 				//Insert the node into the tree
-			opSuccess = iTree.insert(newNode);
+			opSuccess = iTree.insertNode(newNode);
 		}
 		else if (code == 'D') {
 			dataIN >> IDtoSearch >> ws; //Read in the ID of the node to delete
@@ -154,7 +154,7 @@ void processData(ifstream&dataIN) {
 			if (code2 == 'E') {
 
 				printHeaderForAll(); //Print a header for the tree printout
-				//printEntireTree();
+				iTree.printEntireTree();
 				//PRINT ENTIRE TREE
 			}
 			if (code2 == 'N') {
@@ -199,7 +199,7 @@ int main() {
 	MAXLINECOUNT = 54;
 	 	
 	Header(dataOUT); // Print data header.
-	processData(dataIN); // Process the data in the input file
+	processData(); // Process the data in the input file
 	
 	newPage(dataOUT); // Insert a page break before the footer
 	Footer(dataOUT); // Print footer. 
