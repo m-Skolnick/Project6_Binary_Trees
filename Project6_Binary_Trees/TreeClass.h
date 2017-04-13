@@ -29,11 +29,12 @@ class BinaryTreeClass {
 public:
 	BinaryTreeClass();
 	bool isEmpty();
-	bool insert(NodeType);
+	NodeType searchTreeForNode(string, NodeType*);
 	bool insertNode(NodeType);
 	NodeType findNode(string);
-	void printEntireTree();
+	bool printEntireTree();
 	void printEachNode(NodeType*);
+	bool printNode(string);
 private:
 	NodeType *RootPtr;
 };
@@ -57,44 +58,11 @@ inline bool BinaryTreeClass::isEmpty()
 		return false;
 	}
 }
-
-inline bool BinaryTreeClass::insert(NodeType newNode){
-
-	NodeType *newPtr = new(NodeType);
-	NodeType *StartPtr = new(NodeType);
-	
-
-	newPtr->ID = newNode.ID;
-	newPtr->Name = newNode.Name;
-	newPtr->QOnHand = newNode.QOnHand;
-	newPtr->QOnOrder = newNode.QOnOrder;
-
-	if (isEmpty()) { //If the tree is empty, place the node at the root and return true;
-		RootPtr = newPtr;
-		RootPtr->Lptr = NULL;
-		RootPtr->Rptr = NULL;
-		return true;
-	}
-	else if (findNode(newPtr->ID).ID == "NOT FOUND") {
-
-		StartPtr = RootPtr;
-
-		if (RootPtr->ID < newPtr->ID) {
-
-		}
-		return true;
-	}
-	else {
-		return false;
-	}
-}
 //*****************************************************************************************************
-
-
 bool BinaryTreeClass::insertNode(NodeType newNode){
-
-
 	
+
+
 	bool inserted = false;
 	NodeType  *newPtr, *currPtr;
 	newPtr = new NodeType;        //
@@ -138,20 +106,46 @@ bool BinaryTreeClass::insertNode(NodeType newNode){
 	return false;
 }  
 //*****************************************************************************************************
-
-inline NodeType BinaryTreeClass::findNode(string IDtoSearch){
+inline NodeType BinaryTreeClass::searchTreeForNode(string IDtoSearch, NodeType *root)
+{
 	NodeType *nodeToReturn = new(NodeType);
 	nodeToReturn->ID = "NOT FOUND";
 
+	if (root != NULL) {
+		searchTreeForNode(IDtoSearch, root->Lptr);
 
-
+		if (root->ID == IDtoSearch) {
+			return *root;
+		}
+		searchTreeForNode(IDtoSearch, root->Rptr);
+	}
 	return *nodeToReturn;
 }
 //*****************************************************************************************************
+inline NodeType BinaryTreeClass::findNode(string IDtoSearch){
 
-inline void BinaryTreeClass::printEntireTree(){
+		//Search the tree for a node matching this ID
+	return searchTreeForNode(IDtoSearch, RootPtr);
+}
+
+inline bool BinaryTreeClass::printNode(string IDtoSearch) {
+	NodeType *nodeToPrint = new(NodeType);
+	*nodeToPrint = findNode(IDtoSearch);
+	if (nodeToPrint->ID == "NOT FOUND") {
+		return false;
+	}
+	else {
+		dataOUT << "    " << left << setw(17) << nodeToPrint->ID << setw(24) << nodeToPrint->Name
+			<< setw(15) << nodeToPrint->QOnHand << nodeToPrint->QOnOrder << endl;
+
+	}
+}
+//*****************************************************************************************************
+
+inline bool BinaryTreeClass::printEntireTree(){
 
 	printEachNode(RootPtr);
+	return true;
 	
 }
 //*****************************************************************************************************
@@ -165,5 +159,7 @@ inline void BinaryTreeClass::printEachNode(NodeType *root) {
 		printEachNode(root->Rptr);
 	}
 }
+//*****************************************************************************************************
+
 
 #endif

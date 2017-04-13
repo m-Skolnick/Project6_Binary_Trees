@@ -126,7 +126,7 @@ void processData() {
 		//Task - Process data from the input file
 		//Returns - A binary tree filled with data from the input file
 	char code,code2,newName[21];
-	bool opSuccess;
+	bool opSuccess = false;
 	int newQuantity;
 	string IDtoSearch;
 	dataIN >> ws >> code; //Seed read first command code
@@ -154,15 +154,13 @@ void processData() {
 			if (code2 == 'E') {
 
 				printHeaderForAll(); //Print a header for the tree printout
-				iTree.printEntireTree();
+				opSuccess = iTree.printEntireTree();
 				//PRINT ENTIRE TREE
 			}
 			if (code2 == 'N') {
 				dataIN >> IDtoSearch;
-				//printNode(iTree.findNode(IDtoSearch));
-				//PRINT ENTIRE TREE
-			}
-			
+				opSuccess = iTree.printNode(IDtoSearch);		
+			}			
 		}
 		else if (code == 'S') {
 			dataIN >> IDtoSearch >> newQuantity;
@@ -181,7 +179,6 @@ void processData() {
 		printMessage(code, IDtoSearch, opSuccess); //Print a message to alert user of outcome
 
 		dataIN >> ws >> code;  //Read in the next code
-
 	}
 
 

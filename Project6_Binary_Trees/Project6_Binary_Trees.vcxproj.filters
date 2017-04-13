@@ -39,5 +39,8 @@
     <None Include="..\..\..\..\..\Downloads\Program #6_BINARY TREES_2017.doc">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="dataOUT.doc">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
