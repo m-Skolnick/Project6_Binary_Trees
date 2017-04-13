@@ -18,6 +18,9 @@
     <ClInclude Include="TreeClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project6.cpp">
@@ -31,5 +34,10 @@
     <Text Include="SampleInput.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\Program #6_BINARY TREES_2017.doc">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

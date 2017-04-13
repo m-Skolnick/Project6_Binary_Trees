@@ -26,6 +26,7 @@ public:
 	BinaryTreeClass();
 	bool isEmpty();
 	bool insert(NodeType);
+	NodeType findNode(string);
 private:
 	NodeType *RootPtr;
 };
@@ -63,4 +64,10 @@ inline bool BinaryTreeClass::insert(NodeType newNode){
 	newPtr->ID = newNode.QOnOrder;
 
 	return false;
+}
+
+inline NodeType BinaryTreeClass::findNode(string){
+
+
+	return NodeType();
 }

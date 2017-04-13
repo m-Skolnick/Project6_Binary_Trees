@@ -26,6 +26,7 @@
 #include <string>
 #include <sstream>
 #include "TreeClass.h"
+#include "Variables.h"
 using namespace std;
 int lineCount;
 int MAXLINECOUNT;
@@ -71,14 +72,59 @@ void Footer(ofstream &Outfile)
 	return;
 }
 //************************************* END OF FUNCTION FOOTER  ***************************************
+void printMessage(char opType, string IDtoPrint, bool opSuccess) {
+
+	if (opSuccess) {
+		if (opType == 'I') {
+			dataOUT << "Item ID Number " << IDtoPrint << " successfully entered into database.";
+
+
+		}
+		if (opType == 'D') {
+			dataOUT << "Item ID Number " << IDtoPrint << " successfully deleted from database.";
+			
+		}
+		if (opType == 'P') {
+
+		}
+		else {
+			dataOUT << "Quantity on Hand for item " << IDtoPrint << " successfully updated.";
+
+		}
+		
+	}
+	else {
+		if (opType == 'I') {
+			dataOUT << "ERROR - Attempt to insert a duplicate item " << IDtoPrint << " into the database.";
+
+
+		}
+		if (opType == 'D') {
+			dataOUT << "ERROR - Attempt to delete an item " << IDtoPrint << " not in the database list.";
+
+		}
+		if (opType == 'P') {
+			dataOUT << "Item " << IDtoPrint << " not in database. Print failed.";
+		}
+		else {
+			dataOUT << "Item " << IDtoPrint << " not in database. Data not updated.";
+
+		}
+
+	}
+	dataOUT << endl;
+	lineCount++;
+}
+//*****************************************************************************************************
 void processData(ifstream&dataIN) {
 	// Receives – The input file
 	// Task - Process data from the input file
 	// Returns - A binary tree filled with data from the input file
 
 	char code,newName[21];
-	bool opSuccessful;
+	bool opSuccess;
 	int newQuantity;
+	string IDtoSearch;
 	dataIN >> ws >> code; //Seed read first command code
 	
 
@@ -86,15 +132,17 @@ void processData(ifstream&dataIN) {
 		NodeType newNode;
 		if (code == 'I') { //If the code is 'I' Insert a node
 				
-			dataIN >> newNode.ID; //Read in the ID of the new node
+			dataIN >> IDtoSearch >> ws;
+			newNode.ID = IDtoSearch; //Read in the ID of the new node
 			dataIN.getline(newName, 20); // Read in the new name to a character array
 			newNode.Name = newName; // Add char array to node as the name
 			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
 				//Insert the node into the tree
-			iTree.insert(newNode);
+			opSuccess = true; //Just to test (need to delete)
+			//opSuccess = iTree.insert(newNode);
 		}
 		else if (code == 'D') {
-			dataIN >> newNode.ID; //Read in the ID of the new node
+			dataIN >> newNode.ID >> ws; //Read in the ID of the new node
 			dataIN.getline(newName, 20); // Read in the new name to a character array
 			newNode.Name = newName; // Add char array to node as the name
 
@@ -108,24 +156,27 @@ void processData(ifstream&dataIN) {
 				//PRINT ENTIRE TREE
 			}
 			if (code == 'N') {
-				dataIN >> newNode.ID;
-				//printNode(newNode);
+				dataIN >> IDtoSearch;
+				//printNode(iTree.findNode(IDtoSearch));
 				//PRINT ENTIRE TREE
 			}
 			
 		}
 		else if (code == 'S') {
-			dataIN >> newNode.ID >> newQuantity;
-			
-			//opSuccessful = updateIOnHand(newNode,)
+			dataIN >> IDtoSearch >> newQuantity;
+
+			//if(!updateIOnHand(newNode)){
+		//}
 		}
 		else if (code == 'O') {
-			dataIN >> newNode.ID >> newQuantity;
+			dataIN >> IDtoSearch >> newQuantity;
+			//opSuccessful = updateIOnHand(findNode(IDtoSearch),)
 		}
 		else if (code == 'R') {
-			dataIN >> newNode.ID >> newQuantity;
+			dataIN >> IDtoSearch >> newQuantity;
 		}
 
+		printMessage(code, IDtoSearch, opSuccess); //Print a message to alert user of outcome
 
 		dataIN >> ws >> code;  //Read in the next code
 
@@ -139,8 +190,8 @@ int main() {
 	// Task - Call each necessary function of the program in order
 	// Returns - Nothing
 	// Declare variables used in program.	 
-	ifstream dataIN("SampleInput.txt"); // Open the file containing data.
-	ofstream dataOUT("dataOUT.doc"); // Create and open the file to write data to.	
+	dataIN.open("SampleInput.txt"); // Open the file containing data.
+	dataOUT.open("dataOUT.doc"); // Create and open the file to write data to.	
 	
 	lineCount = 0;
 	MAXLINECOUNT = 54;
