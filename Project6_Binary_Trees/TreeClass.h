@@ -110,14 +110,19 @@ inline NodeType BinaryTreeClass::searchTreeForNode(string IDtoSearch, NodeType *
 {
 	NodeType *nodeToReturn = new(NodeType);
 	nodeToReturn->ID = "NOT FOUND";
+	bool found = false;
 
 	if (root != NULL) {
-		searchTreeForNode(IDtoSearch, root->Lptr);
-
-		if (root->ID == IDtoSearch) {
-			return *root;
+		if (!found) {
+			searchTreeForNode(IDtoSearch, root->Lptr);
 		}
-		searchTreeForNode(IDtoSearch, root->Rptr);
+		if (root->ID == IDtoSearch) {
+			nodeToReturn = root;
+			found = true;
+		}
+		if (!found) {
+			searchTreeForNode(IDtoSearch, root->Rptr);
+		}
 	}
 	return *nodeToReturn;
 }
