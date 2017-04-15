@@ -179,9 +179,8 @@ inline bool BinaryTreeClass::operateOnNode(string IDtoSearch, char operation, in
 	if (node->ID == "NOT FOUND") { //If the node was not found in the search, return false;
 		return false;
 	}
-	else {
-
-		if (operation == 'P') {
+	else { //If the node was found, perform the specified operation
+		if (operation == 'P') { //If the operation is a 'P' Print the node
 				//Print a header for the item
 			dataOUT << "	Item             Item                    Quantity       Quantity" << endl;
 			dataOUT << "	ID Number        Description             On hand        On Order" << endl;
@@ -191,27 +190,32 @@ inline bool BinaryTreeClass::operateOnNode(string IDtoSearch, char operation, in
 			 << right << setw(7) << node->QOnHand << setw(15) << node->QOnOrder << endl;
 			dataOUT << "--------------------------------------------------------------------" << endl;
 			lineCount += 5; //Increment the line counter
-		}
-		else if (operation == 'S') {
+		}//If the operation is an 'S', adjust the inventory to reflect a sale
+		else if (operation == 'S') { 
 			node->QOnHand -= value;
-		}
-		else if (operation == 'R') {
+		}//If the operation is an 'R', adjust the inventory to reflect a shipment received
+		else if (operation == 'R') { 
 			node->QOnOrder -= value;
 			node->QOnHand += value;
-		}
+		}//If the operation is an 'O', adjust the inventory to reflect a restock transaction
 		else if (operation == 'O') {
 			node->QOnOrder += value;
 		}
-		return true;
+		return true; //Return true to indicate that the operation was successful
 	}
 }
 //*****************************************************************************************************
 
 inline bool BinaryTreeClass::printEntireTree(){
-
-	printEachNode(RootPtr);
-	return true;
-	
+		//Print each node in the tree
+	if (RootPtr == NULL) {
+		dataOUT << "There are no inventory items to print" << endl;
+		lineCount++;
+	}
+	else {
+		printEachNode(RootPtr);
+		return true;
+	}
 }
 //*****************************************************************************************************
 inline void BinaryTreeClass::printEachNode(NodeType *root) {
