@@ -28,8 +28,6 @@
 #include "TreeClass.h"
 #include "Variables.h"
 using namespace std;
-int lineCount;
-int MAXLINECOUNT;
 //*****************************************************************************************************
 void newPage(ofstream&dataOUT) {
 	// Receives – the output file
@@ -95,18 +93,19 @@ void printMessage(char opType, string IDtoPrint, bool opSuccess) {
 		if (opType == 'I') {
 			dataOUT << "ERROR - Attempt to insert a duplicate item " << IDtoPrint << " into the database.";
 		}
-		if (opType == 'D') {
+		else if (opType == 'D') {
 			dataOUT << "ERROR - Attempt to delete an item " << IDtoPrint << " not in the database list.";
 		}
-		if (opType == 'P') {
+		else if (opType == 'P') {
 			dataOUT << "Item " << IDtoPrint << " not in database. Print failed.";
 		}
 		else {
 			dataOUT << "Item " << IDtoPrint << " not in database. Data not updated.";
 		}
 	}
-	dataOUT << endl; //Add a line after printing output message
-	lineCount++; //Increment the line counter
+	//Add a line of dashes after printing output message
+	dataOUT << endl << "--------------------------------------------------------------------" << endl; 	
+	lineCount+=2; //Increment the line counter
 }
 //*****************************************************************************************************
 void printHeaderForAll() {
@@ -116,7 +115,7 @@ void printHeaderForAll() {
 	dataOUT << "	               JAKE’S HARDWARE INVENTORY REPORT" << endl;
 	dataOUT << "	Item             Item                    Quantity       Quantity" << endl;
 	dataOUT << "	ID Number        Description             On hand        On Order" << endl;
-	dataOUT << "	----------------------------------------------------------------" << endl;
+	dataOUT << "--------------------------------------------------------------------" << endl;
 	lineCount += 4; // Increment line counter
 
 }
@@ -139,43 +138,50 @@ void processData() {
 			dataIN.getline(newName, 20); // Read in the new name to a character array
 			newNode.Name = newName; // Add char array to node as the name
 			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
-				//Insert the node into the tree
-			opSuccess = iTree.insertNode(newNode);
+				//Insert the node into the tree if it is not already there
+			if (!iTree.searchTree(IDtoSearch)) {
+				opSuccess = iTree.insertNode(newNode);
+			}
+			else {
+				opSuccess = false;
+			}
+			
 		}
 		else if (code == 'D') {
 			dataIN >> IDtoSearch >> ws; //Read in the ID of the node to delete
 			dataIN.getline(newName, 20); // Read in the new name to a character array
 			
-
-			// MISSING DELETE FUNCTION
+			opSuccess = iTree.deleteNode(IDtoSearch);//Delete the node matching this ID
+		
 		}
 		else if (code == 'P') {
 			dataIN >> code2;
 			if (code2 == 'E') {
-
+				newPage(dataOUT);//Space out to new page for entire printing of tree
 				printHeaderForAll(); //Print a header for the tree printout
-				opSuccess = iTree.printEntireTree();
-				//PRINT ENTIRE TREE
+				opSuccess = iTree.printEntireTree(); //Print entire tree
+				newPage(dataOUT);//Space out rest of page for more output
 			}
 			if (code2 == 'N') {
 				dataIN >> IDtoSearch;
-				opSuccess = iTree.printNode(IDtoSearch);		
+				if (iTree.searchTree(IDtoSearch)) {
+					opSuccess = iTree.updateNode(IDtoSearch, code, 0);//Print an individual node
+				}
+				else {
+					opSuccess = false;
+				}
+						
 			}			
 		}
-		else if (code == 'S') {
+		else {
 			dataIN >> IDtoSearch >> newQuantity;
-
-			//if(!updateIOnHand(newNode)){
-		//}
+			if (iTree.searchTree(IDtoSearch)) {
+				opSuccess = iTree.updateNode(IDtoSearch, code, newQuantity);//Update an individual node
+			}
+			else {
+				opSuccess = false;
+			}		
 		}
-		else if (code == 'O') {
-			dataIN >> IDtoSearch >> newQuantity;
-			//opSuccessful = updateIOnHand(findNode(IDtoSearch),)
-		}
-		else if (code == 'R') {
-			dataIN >> IDtoSearch >> newQuantity;
-		}
-
 		printMessage(code, IDtoSearch, opSuccess); //Print a message to alert user of outcome
 
 		dataIN >> ws >> code;  //Read in the next code
@@ -193,7 +199,7 @@ int main() {
 	dataOUT.open("dataOUT.doc"); // Create and open the file to write data to.	
 	
 	lineCount = 0;
-	MAXLINECOUNT = 54;
+	MAXLINECOUNT = 20; //Should be 54
 	 	
 	Header(dataOUT); // Print data header.
 	processData(); // Process the data in the input file

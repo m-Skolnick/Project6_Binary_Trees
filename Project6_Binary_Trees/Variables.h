@@ -15,4 +15,7 @@ using namespace std;
 
 ifstream dataIN; // Declare ifstream for the file containing data.
 ofstream dataOUT; // Create ofstream for the file to write data to.	
+bool nodeFound = false;
+int lineCount;
+int MAXLINECOUNT;
 #endif

@@ -3,18 +3,159 @@
 ---------------------------------- - ---------------------------------- - 
 
 Item ID Number OP123 successfully entered into database.
+--------------------------------------------------------------------
 Item ID Number FH473 successfully entered into database.
+--------------------------------------------------------------------
 Item ID Number RB902 successfully entered into database.
+--------------------------------------------------------------------
 Item ID Number FC881 successfully entered into database.
+--------------------------------------------------------------------
 Item ID Number DP721 successfully entered into database.
+--------------------------------------------------------------------
+
+
+
+
+
+
 	               JAKE’S HARDWARE INVENTORY REPORT
 	Item             Item                    Quantity       Quantity
 	ID Number        Description             On hand        On Order
-	----------------------------------------------------------------
+--------------------------------------------------------------------
     DP721            Diamond Pendant         92             11
     FC881            Fur Coat                600            125
     FH473            Fur Hat                 750            250
     OP123            Opal Ring               201            99
     RB902            Ruby Ring               280            75
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Quantity on Hand for item FH473 successfully updated.
+--------------------------------------------------------------------
 Item ID Number RB702 successfully entered into database.
+--------------------------------------------------------------------
+    FH473            Fur Hat                 650            250
+--------------------------------------------------------------------
+Quantity on Hand for item DP721 successfully updated.
+--------------------------------------------------------------------
+Item RB902 not in database. Data not updated.
+--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+	               JAKE’S HARDWARE INVENTORY REPORT
+	Item             Item                    Quantity       Quantity
+	ID Number        Description             On hand        On Order
+--------------------------------------------------------------------
+    DP721            Diamond Pendant         88             11
+    FC881            Fur Coat                600            125
+    FH473            Fur Hat                 650            250
+    OP123            Opal Ring               201            99
+    RB702            Ruby Necklace           110            40
+    RB902            Ruby Ring               280            75
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Item ID Number RE702 successfully entered into database.
+--------------------------------------------------------------------
+ERROR - Attempt to delete an item DN022 not in the database list.
+--------------------------------------------------------------------
+Item RB902 not in database. Data not updated.
+--------------------------------------------------------------------
+Item ID Number OP123 successfully deleted from database.
+--------------------------------------------------------------------
+ERROR - Attempt to delete an item DE456 not in the database list.
+--------------------------------------------------------------------
+Item HF473 not in database. Data not updated.
+--------------------------------------------------------------------
+Item ID Number EM543 successfully entered into database.
+--------------------------------------------------------------------
+ERROR - Attempt to delete an item DR356 not in the database list.
+--------------------------------------------------------------------
+Item ID Number FH473 successfully deleted from database.
+--------------------------------------------------------------------
+
+
+	               JAKE’S HARDWARE INVENTORY REPORT
+	Item             Item                    Quantity       Quantity
+	ID Number        Description             On hand        On Order
+--------------------------------------------------------------------
+    DP721            Diamond Pendant         88             11
+    EM543            Emerald Bracelet        0              100
+    FC881            Fur Coat                600            125
+    RB702            Ruby Necklace           110            40
+    RB902            Ruby Ring               280            75
+    RE702            Ruby Earrings           100            35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------- - 
+ | END OF PROGRAM OUTPUT |         
+-------------------------------- - 
