@@ -31,7 +31,7 @@
     <Text Include="tree_in.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="SampleInput.txt">
+    <Text Include="TestInput.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

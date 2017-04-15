@@ -10,8 +10,7 @@ I
 RB902 
 Ruby Ring          
 280  75
-I 
-FC881 
+I FC881 
 Fur Coat           
 600  125
 I 

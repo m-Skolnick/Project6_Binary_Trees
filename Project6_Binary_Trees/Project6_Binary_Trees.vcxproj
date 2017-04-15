@@ -117,7 +117,7 @@
     <ClCompile Include="Project6.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="SampleInput.txt" />
+    <Text Include="TestInput.txt" />
     <Text Include="tree_in.txt" />
   </ItemGroup>
   <ItemGroup>

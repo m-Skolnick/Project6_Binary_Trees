@@ -30,16 +30,15 @@
 using namespace std;
 //*****************************************************************************************************
 void newPage(ofstream&dataOUT) {
-	// Receives – the output file
-	// Task - Insert blank lines to fill the rest of the current page
-	// Returns - Nothing
-	while (lineCount < MAXLINECOUNT) {
+		// Receives – the output file
+		// Task - Insert blank lines to fill the rest of the current page
+		// Returns - Nothing
+	while (lineCount < LINESPERPAGE) {
 		dataOUT << endl;
 		lineCount++;
 	}
 	lineCount = 0; // Reset the line count to 0 for next page.
 }
-//*****************************************************************************************************
 //*************************************  FUNCTION HEADER  *********************************************
 void Header(ofstream &Outfile)
 {       // Receives – the output file
@@ -57,8 +56,7 @@ void Header(ofstream &Outfile)
 }
 //************************************* END OF FUNCTION HEADER  ***************************************
 //*************************************  FUNCTION FOOTER  *********************************************
-void Footer(ofstream &Outfile)
-{
+void Footer(ofstream &Outfile){
 		// Receives – the output file
 		// Task - Prints the output salutation
 		// Returns - Nothing
@@ -91,10 +89,12 @@ void printMessage(char opType, string IDtoPrint, bool opSuccess) {
 	}
 	else { //Print the corresponding message if the operation failed
 		if (opType == 'I') {
-			dataOUT << "ERROR - Attempt to insert a duplicate item " << IDtoPrint << " into the database.";
+			dataOUT << "ERROR - Attempt to insert a duplicate item " 
+				<< IDtoPrint << " into the database.";
 		}
 		else if (opType == 'D') {
-			dataOUT << "ERROR - Attempt to delete an item " << IDtoPrint << " not in the database list.";
+			dataOUT << "ERROR - Attempt to delete an item (" 
+				<< IDtoPrint << ") not in the database list.";
 		}
 		else if (opType == 'P') {
 			dataOUT << "Item " << IDtoPrint << " not in database. Print failed.";
@@ -108,106 +108,79 @@ void printMessage(char opType, string IDtoPrint, bool opSuccess) {
 	lineCount+=2; //Increment the line counter
 }
 //*****************************************************************************************************
-void printHeaderForAll() {
+void printHeaderForTree() {
 		//Receives – Nothing
-		//Task - Prints a header for when entire tree is printed
+		//Task - Prints a header for when any node from the tree is printed
 		//Returns - Nothing
 	dataOUT << "	               JAKE’S HARDWARE INVENTORY REPORT" << endl;
 	dataOUT << "	Item             Item                    Quantity       Quantity" << endl;
 	dataOUT << "	ID Number        Description             On hand        On Order" << endl;
 	dataOUT << "--------------------------------------------------------------------" << endl;
 	lineCount += 4; // Increment line counter
-
 }
 //*****************************************************************************************************
 void processData() {
-		//Receives – The input file
+		//Receives – Nothing
 		//Task - Process data from the input file
-		//Returns - A binary tree filled with data from the input file
-	char code,code2,newName[21];
+		//Returns - Nothing
+		//Declare local variables needed for processing
+	char code1,code2,newName[22];
 	bool opSuccess = false;
 	int newQuantity;
 	string IDtoSearch;
-	dataIN >> ws >> code; //Seed read first command code
-	while (code != 'Q') {
+	dataIN >> ws >> code1; //Seed read first command code
+	while (code1 != 'Q') { //Keep reading until the sentinel of 'Q' is reached
 		NodeType newNode;
-		if (code == 'I') { //If the code is 'I' Insert a node
-				
-			dataIN >> IDtoSearch >> ws;
-			newNode.ID = IDtoSearch; //Read in the ID of the new node
-			dataIN.getline(newName, 20); // Read in the new name to a character array
-			newNode.Name = newName; // Add char array to node as the name
-			dataIN >> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
+		if (code1 == 'I') { //If the code is 'I' Insert a node				
+			dataIN >> IDtoSearch >> ws; //Get the ID of the node to insert
+			newNode.ID = IDtoSearch; //Set the ID to the ID of the new Node
+			dataIN.getline(newName, 21); //Read in the new name to a character array
+			newNode.Name = newName; //Add char array to node as the name
+			dataIN >> ws>> newNode.QOnHand >> newNode.QOnOrder; // Get the QOnHand and QOrdered
 				//Insert the node into the tree if it is not already there
-			if (!iTree.searchTree(IDtoSearch)) {
-				opSuccess = iTree.insertNode(newNode);
-			}
-			else {
-				opSuccess = false;
-			}
-			
+			opSuccess = iTree.insertNode(newNode);			
 		}
-		else if (code == 'D') {
+		else if (code1 == 'D') { //If opcode is 'D', delete a node
 			dataIN >> IDtoSearch >> ws; //Read in the ID of the node to delete
-			dataIN.getline(newName, 20); // Read in the new name to a character array
-			
-			opSuccess = iTree.deleteNode(IDtoSearch);//Delete the node matching this ID
-		
+			dataIN.getline(newName, 21); // Read in the name to a character array			
+			opSuccess = iTree.deleteNode(IDtoSearch);//Delete the node matching this ID		
 		}
-		else if (code == 'P') {
-			dataIN >> code2;
-			if (code2 == 'E') {
+		else if (code1 == 'P') { //If opcode is 'P' print either one node, or whole tree
+			dataIN >> code2; //Get opcode indicating whether one node or whole tree should be printed
+			if (code2 == 'E') { //If second opcode is 'E' print the whole tree
 				newPage(dataOUT);//Space out to new page for entire printing of tree
-				printHeaderForAll(); //Print a header for the tree printout
+				printHeaderForTree(); //Print a header for the tree printout
 				opSuccess = iTree.printEntireTree(); //Print entire tree
 				newPage(dataOUT);//Space out rest of page for more output
 			}
-			if (code2 == 'N') {
-				dataIN >> IDtoSearch;
-				if (iTree.searchTree(IDtoSearch)) {
-					opSuccess = iTree.updateNode(IDtoSearch, code, 0);//Print an individual node
-				}
-				else {
-					opSuccess = false;
-				}
-						
+			if (code2 == 'N') { //If second opcode is 'N' only print one node
+				dataIN >> IDtoSearch; //Get ID of node to print
+				opSuccess = iTree.operateOnNode(IDtoSearch, code1, 0);//Print an individual node
 			}			
 		}
-		else {
-			dataIN >> IDtoSearch >> newQuantity;
-			if (iTree.searchTree(IDtoSearch)) {
-				opSuccess = iTree.updateNode(IDtoSearch, code, newQuantity);//Update an individual node
-			}
-			else {
-				opSuccess = false;
-			}		
+		else { //For all other opcodes, follow the same procedure
+			dataIN >> IDtoSearch >> newQuantity; //Read in the ID of node to operate on, and value
+					//Update the specified node with whatever new value was specified
+				opSuccess = iTree.operateOnNode(IDtoSearch, code1, newQuantity);
 		}
-		printMessage(code, IDtoSearch, opSuccess); //Print a message to alert user of outcome
-
-		dataIN >> ws >> code;  //Read in the next code
+		printMessage(code1, IDtoSearch, opSuccess); //Print a message to alert user of op outcome
+		dataIN >> ws >> code1;  //Read in the next code
 	}
-
-
 }
 //*****************************************************************************************************
 int main() {
-	// Receives – Nothing
-	// Task - Call each necessary function of the program in order
-	// Returns - Nothing
-	// Declare variables used in program.	 
-	dataIN.open("SampleInput.txt"); // Open the file containing data.
-	dataOUT.open("dataOUT.doc"); // Create and open the file to write data to.	
-	
-	lineCount = 0;
-	MAXLINECOUNT = 20; //Should be 54
-	 	
+		// Receives – Nothing
+		// Task - Call each necessary function of the program in order
+		// Returns - Nothing
+		// Declare variables used in process	 
+	dataIN.open("tree_in.txt"); // Open the file containing data
+	dataOUT.open("dataOUT.doc"); // Create and open the file to write data to
+	lineCount = 0; //Initialize lineCount to 0
+	LINESPERPAGE = 54; //Intialize lines per page to 54
 	Header(dataOUT); // Print data header.
-	processData(); // Process the data in the input file
-	
-	newPage(dataOUT); // Insert a page break before the footer
+	processData(); // Process the data from the input file
 	Footer(dataOUT); // Print footer. 
 	dataIN.close(); // Close input data file. 
 	dataOUT.close(); // Close output data file.
-
 	return 0;
 }

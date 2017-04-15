@@ -2,15 +2,27 @@
                 Spring 2017                 Assignment #6
 ---------------------------------- - ---------------------------------- - 
 
-Item ID Number OP123 successfully entered into database.
+Item ID Number LM677 successfully entered into database.
 --------------------------------------------------------------------
-Item ID Number FH473 successfully entered into database.
+Item ID Number SP198 successfully entered into database.
 --------------------------------------------------------------------
-Item ID Number RB902 successfully entered into database.
+Item ID Number FT088 successfully entered into database.
 --------------------------------------------------------------------
-Item ID Number FC881 successfully entered into database.
+Item ID Number HM222 successfully entered into database.
 --------------------------------------------------------------------
-Item ID Number DP721 successfully entered into database.
+Item ID Number LB532 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number GC119 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number SB993 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number RK552 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number GH332 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number WA022 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number DR777 successfully entered into database.
 --------------------------------------------------------------------
 
 
@@ -18,15 +30,6 @@ Item ID Number DP721 successfully entered into database.
 
 
 
-	               JAKE’S HARDWARE INVENTORY REPORT
-	Item             Item                    Quantity       Quantity
-	ID Number        Description             On hand        On Order
---------------------------------------------------------------------
-    DP721            Diamond Pendant         92             11
-    FC881            Fur Coat                600            125
-    FH473            Fur Hat                 750            250
-    OP123            Opal Ring               201            99
-    RB902            Ruby Ring               280            75
 
 
 
@@ -39,20 +42,6 @@ Item ID Number DP721 successfully entered into database.
 
 
 
-
-
-
-
-Quantity on Hand for item FH473 successfully updated.
---------------------------------------------------------------------
-Item ID Number RB702 successfully entered into database.
---------------------------------------------------------------------
-    FH473            Fur Hat                 650            250
---------------------------------------------------------------------
-Quantity on Hand for item DP721 successfully updated.
---------------------------------------------------------------------
-Item RB902 not in database. Data not updated.
---------------------------------------------------------------------
 
 
 
@@ -67,12 +56,17 @@ Item RB902 not in database. Data not updated.
 	Item             Item                    Quantity       Quantity
 	ID Number        Description             On hand        On Order
 --------------------------------------------------------------------
-    DP721            Diamond Pendant         88             11
-    FC881            Fur Coat                600            125
-    FH473            Fur Hat                 650            250
-    OP123            Opal Ring               201            99
-    RB702            Ruby Necklace           110            40
-    RB902            Ruby Ring               280            75
+    DR777            Drill 1/2 hp               16             34
+    FT088            Fertilizer 25lb Bag        75             30
+    GC119            Gasoline Can 5 gal         32             18
+    GH332            Garden Hose 50ft           50              0
+    HM222            Hammer                    187             13
+    LB532            Light Bulb 75 watt        309            181
+    LM677            Lawn Mower 3/4 hp          25              5
+    RK552            Leaf Rake                  34             26
+    SB993            Snow Blower                12              3
+    SP198            Shovel                    100             10
+    WA022            Washers 1/2 inch          398            122
 
 
 
@@ -89,37 +83,102 @@ Item RB902 not in database. Data not updated.
 
 
 
-Item ID Number RE702 successfully entered into database.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ERROR - Attempt to delete an item (CS882) not in the database list.
 --------------------------------------------------------------------
-ERROR - Attempt to delete an item DN022 not in the database list.
+Item ID Number TM567 successfully entered into database.
 --------------------------------------------------------------------
-Item RB902 not in database. Data not updated.
+ERROR - Attempt to insert a duplicate item SP198 into the database.
 --------------------------------------------------------------------
-Item ID Number OP123 successfully deleted from database.
+Item ID Number GC119 successfully deleted from database.
 --------------------------------------------------------------------
-ERROR - Attempt to delete an item DE456 not in the database list.
+Quantity on Hand for item SB993 successfully updated.
 --------------------------------------------------------------------
-Item HF473 not in database. Data not updated.
+Quantity on Hand for item RK552 successfully updated.
 --------------------------------------------------------------------
-Item ID Number EM543 successfully entered into database.
+Quantity on order for item GH332 successfully updated.
 --------------------------------------------------------------------
-ERROR - Attempt to delete an item DR356 not in the database list.
+Item GC119 not in database. Print failed.
 --------------------------------------------------------------------
-Item ID Number FH473 successfully deleted from database.
+Item ID Number WB202 successfully entered into database.
 --------------------------------------------------------------------
+Item ID Number FG081 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number DP199 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number SP198 successfully deleted from database.
+--------------------------------------------------------------------
+	Item             Item                    Quantity       Quantity
+	ID Number        Description             On hand        On Order
+--------------------------------------------------------------------
+    FG081            Fence Gate                 11              4
+--------------------------------------------------------------------
+Item ID Number RG555 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number NG111 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number SA333 successfully entered into database.
+--------------------------------------------------------------------
+Item ID Number FG081 successfully deleted from database.
+--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	               JAKE’S HARDWARE INVENTORY REPORT
 	Item             Item                    Quantity       Quantity
 	ID Number        Description             On hand        On Order
 --------------------------------------------------------------------
-    DP721            Diamond Pendant         88             11
-    EM543            Emerald Bracelet        0              100
-    FC881            Fur Coat                600            125
-    RB702            Ruby Necklace           110            40
-    RB902            Ruby Ring               280            75
-    RE702            Ruby Earrings           100            35
-
+    DP199            Duct Pipe 6ft               2             48
+    DR777            Drill 1/2 hp               16             34
+    FT088            Fertilizer 25lb Bag        75             30
+    GH332            Garden Hose 50ft           50             50
+    HM222            Hammer                    187             13
+    LB532            Light Bulb 75 watt        309            181
+    LM677            Lawn Mower 3/4 hp          25              5
+    NG111            Nail Gun                   28              2
+    RG555            Garden Rake                16              9
+    RK552            Leaf Rake                  54              6
+    SA333            Sander 1/2 hp              33              2
+    SB993            Snow Blower                 9              3
+    TM567            Tape Measure 10ft         122             28
+    WA022            Washers 1/2 inch          398            122
+    WB202            Wheel Barrow               23              7
 
 
 
@@ -157,5 +216,5 @@ Item ID Number FH473 successfully deleted from database.
 
 
 -------------------------------- - 
- | END OF PROGRAM OUTPUT |         
+         | END OF PROGRAM OUTPUT | 
 -------------------------------- - 
