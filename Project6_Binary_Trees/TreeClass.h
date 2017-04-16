@@ -4,7 +4,13 @@
 //*                                                                                                   *
 //*                                                                                                   *
 //*   USER DEFINED                                                                                    *
-//*    MODULES     :  *************NEED TO DO THIS***********************                    *
+//*    MODULES    : insertNode - Inserts a node into the tree                                         *
+//*                 patchParent - Patches the parent of the current node                              *
+//*                 deleteNode - Deletes the node from the tree which matches the ID passed in        *
+//*                 operateOnNode - Based on opcode, update or print the specified node               *
+//*                 printEntireTree - Print each node of the tree                                     *
+//*                 printEachNode - Print the data held in each node of the tree                      *
+//*                 searchForNode - Return the node which ID matched the ID passed in                 *
 //*                                                                                                   *
 //*****************************************************************************************************
 #ifndef TREECLASS_H
@@ -28,7 +34,7 @@ public:
 	bool insertNode(NodeType);
 	bool printEntireTree();
 	void printEachNode(NodeType*);
-	void PatchParent(NodeType*, NodeType*, NodeType*);
+	void patchParent(NodeType*, NodeType*, NodeType*);
 	bool deleteNode(string);
 	bool operateOnNode(string, char, int);
 	NodeType* searchForNode(string);
@@ -54,82 +60,88 @@ bool BinaryTreeClass::insertNode(NodeType newNode){
 	if (searchForNode(newNode.ID)->ID != "NOT FOUND") {
 		return false;
 	}
+		//If the node was not already found in the tree, insert it
 	else if (newPtr != NULL){
+			//Move values from node being passed in to new pointer
 		newPtr->ID = newNode.ID;
 		newPtr->Name = newNode.Name;
 		newPtr->QOnHand = newNode.QOnHand;
-		newPtr->QOnOrder = newNode.QOnOrder;  // 
-		newPtr -> Lptr = NULL;   //        
-		newPtr -> Rptr = NULL;   //        
-		currPtr = RootPtr;
-		while (inserted == false)
-		{
-			if (currPtr == NULL)
-			{
+		newPtr->QOnOrder = newNode.QOnOrder;  
+			//Initialize left and right pointer of new node to null
+		newPtr -> Lptr = NULL;    
+		newPtr -> Rptr = NULL;      
+		currPtr = RootPtr; //Set the current pointer to the root
+		while (inserted == false){
+			if (currPtr == NULL){ //If there is not yet a root value, set current Ptr to root
 				RootPtr = newPtr;
-				return true;                          
+				return true; //Return true to indicate that the node was successfully added
 			}                                           
-			else                        
-			{
-				if (newPtr->ID < currPtr ->ID)
-					if (currPtr->Lptr != NULL)
+			else{ //If tree already contained a node, add new node at correct location
+				if (newPtr->ID < currPtr ->ID) 
+					//If new node ID is less than current, follow the left pointer
+					if (currPtr->Lptr != NULL) {
 						currPtr = currPtr->Lptr;
-					else
-					{
+					}
+					else{
 						currPtr->Lptr = newPtr;
 						return true;
 					}
-				else
-					if (currPtr->Rptr != NULL)
+				else {
+						//If new node ID is greater than current, follow the right pointer
+					if (currPtr->Rptr != NULL) {
 						currPtr = currPtr->Rptr;
-					else
-					{
+					}
+					else{
 						currPtr->Rptr = newPtr;
 						return true;
 					}
+				}
 			}
 		}  
 	}   
 	return false;
 }  
 //*****************************************************************************************************
-//*****************************************************************************************************
-inline void BinaryTreeClass::PatchParent(NodeType *Newparnode, NodeType *parnode, NodeType *delnode){
-
-
-	if (parnode == NULL)
+inline void BinaryTreeClass::patchParent(NodeType *Newparnode, NodeType *parnode, NodeType *delnode){
+		// Receives – The new parent node, current parent node, and the node to delete
+		// Task - Patch the parent when deleting a node
+		// Returns - Nothing
+		// If there is no parent node, set the Root to be the new parent
+	if (parnode == NULL) {
 		RootPtr = Newparnode;
-	else
-		if (parnode->Lptr == delnode)
+	}
+	else{ //If the parent is not null, replace either the left or right pointer to patch in new parent
+		if (parnode->Lptr == delnode) {
 			parnode->Lptr = Newparnode;
-		else
+		}
+		else {
 			parnode->Rptr = Newparnode;
+		}
+	}
 }
 //*****************************************************************************************************
 inline bool BinaryTreeClass::deleteNode(string IDtoSearch){
-
-
-	// Declare required local pointers 
+		// Receives – The ID matching a node to delete
+		// Task - Delete a node from the tree
+		// Returns - A bool to indicate if node was deleted from tree
+		// Declare local pointers 
 	NodeType *delnode, *parnode, *node1, *node2, *node3;
-	// Declare a flag to indicate the node to be deleted  is found  
-	bool found = false;
-		// Set the pointers to start at the root
-	delnode = RootPtr;
+	bool found = false; // Declare flag to indicate if the node to be deleted was found  
+	delnode = RootPtr;// Set the pointers to start at the root
 	parnode = NULL;
-	// Search the tree until we find the node to be deleted or until there
-	//  are no more nodes to examine
-	while (found == false && delnode != NULL)
-	{		 // Set flag to true if we find the node
-		if (IDtoSearch == delnode->ID)
+	// Search the tree until node to be deleted is found, or end of tree is reached
+	while (found == false && delnode != NULL){	// Set flag to true if node is found
+		if (IDtoSearch == delnode->ID) {
 			found = true;
-		else 	 // Otherwise keep track of the parent node and move down
-				 // the appropriate branch of the tree 
-		{
+		}
+		else { // Otherwise keep track of the parent node and move down correct branch of the tree 
 			parnode = delnode;
-			if (IDtoSearch < delnode->ID)
+			if (IDtoSearch < delnode->ID) {
 				delnode = delnode->Lptr;
-			else
+			}
+			else{
 				delnode = delnode->Rptr;
+			}
 		}
 	}
 	//  CASE 1 – Node is not in tree
@@ -139,13 +151,12 @@ inline bool BinaryTreeClass::deleteNode(string IDtoSearch){
 	else{
 		if (delnode->Lptr == NULL)
 			if (delnode->Rptr == NULL) // CASE 2 – Node has NO children
-				PatchParent(NULL, parnode, delnode);
+				patchParent(NULL, parnode, delnode);
 			else  	 	     // CASE 3 – Node has ONE right child 
-				PatchParent(delnode->Rptr, parnode, delnode);
-		else
-		{
+				patchParent(delnode->Rptr, parnode, delnode);
+		else{
 			if (delnode->Rptr == NULL)  // CASE 4 – Node has ONE left child    
-				PatchParent(delnode->Lptr, parnode, delnode);
+				patchParent(delnode->Lptr, parnode, delnode);
 			else { 		     // CASE 5 – Node has TWO children
 				node1 = delnode;
 				node2 = delnode->Lptr;
@@ -160,15 +171,13 @@ inline bool BinaryTreeClass::deleteNode(string IDtoSearch){
 					node2->Lptr = delnode->Lptr;
 				}
 				node2->Rptr = delnode->Rptr;
-				PatchParent(node2, parnode, delnode);
-			}  /* end else */
-		} /* end else  */
+					//Patch the parent with the correct nodes
+				patchParent(node2, parnode, delnode);
+			}
+		}
 		return true;
-	} /* end else */
-}  // end function
-
-
-//*****************************************************************************************************
+	}
+}
 //*****************************************************************************************************
 inline bool BinaryTreeClass::operateOnNode(string IDtoSearch, char operation, int value) {
 		//Receives – The ID of the node to operate on, the type of operation, and the op value
@@ -205,14 +214,17 @@ inline bool BinaryTreeClass::operateOnNode(string IDtoSearch, char operation, in
 	}
 }
 //*****************************************************************************************************
-
 inline bool BinaryTreeClass::printEntireTree(){
-		//Print each node in the tree
+		//Receives – Nothing
+		//Task - Print each item in the tree
+		//Returns - A bool indicating whether operation was successful
+		//If there are no nodes in the tree, alert the user
 	if (RootPtr == NULL) {
 		dataOUT << "There are no inventory items to print" << endl;
 		lineCount++;
+		return false;
 	}
-	else {
+	else { //If tree is not empty, print each of the items in the tree
 		printEachNode(RootPtr);
 		return true;
 	}
@@ -232,33 +244,31 @@ inline void BinaryTreeClass::printEachNode(NodeType *root) {
 	}
 }
 //*****************************************************************************************************
-//*****************************************************************************************************
 inline NodeType* BinaryTreeClass::searchForNode(string IDtoSearch) {
-
+		//Receives – The ID of a node to search for
+		//Task - Find the specified node in the tree
+		//Returns - The node with the ID matching the node searched for
 	NodeType *currPtr = new(NodeType);
-
-	currPtr = RootPtr;
+	currPtr = RootPtr; //Start the search at the root of the tree
 	bool found = false;
 	while (!found && currPtr != NULL) {
-		if (IDtoSearch < currPtr->ID) {
+			//If ID is less than current node, follow left pointer
+		if (IDtoSearch < currPtr->ID) { 
 			currPtr = currPtr->Lptr;
-		}
-		else if (IDtoSearch > currPtr->ID) {
+		}	//If ID is greater than current node, follow right pointer
+		else if (IDtoSearch > currPtr->ID) { 
 			currPtr = currPtr->Rptr;
-		}
+		} //If ID is equal to current node, set found to true
 		else if (IDtoSearch == currPtr->ID) {
 			found = true;
-		}
-		
+		}		
 	}
-	if (currPtr == NULL) {
+	if (currPtr == NULL) { //If the node was not found, set ID of node to be returned to "NOT FOUND"
 		currPtr = new(NodeType);
 		currPtr->ID = "NOT FOUND";
 	}
+		//Return the node which was found
 	return currPtr;
-
 }
 //*****************************************************************************************************
-
-
 #endif

@@ -1,6 +1,6 @@
 //************************************  PROGRAM IDENTIFICATION  ***************************************
 //*                                                                                                   *
-//*   PROGRAM FILE NAME:  Project7.cpp          ASSIGNMENT #:  6            Grade: _________          *
+//*   PROGRAM FILE NAME:  Project6.cpp          ASSIGNMENT #:  6            Grade: _________          *
 //*                                                                                                   *
 //*   PROGRAM AUTHOR:     __________________________________________                                  *
 //*                                     Micaiah Skolnick                                              *
@@ -10,13 +10,23 @@
 //*****************************************************************************************************
 //***********************************  PROGRAM DESCRIPTION  *******************************************
 //*                                                                                                   *
-//*   PROCESS: ******************************************************NEED TO DO THIS*************************
+//*   PROCESS: The program processes each line of the input file based on the operation code. If the  *
+//*            opcode is an 'I', an inventory item is entered into the tree. For opcode = 'D', the    *
+//*            item is deleted from the tree. opcode = 'P' the item is printed, or the whole tree is  *
+//*            printed. opcode 'S', 'O', and 'R' have to do with adjusting quantity on hand, and      *
+//*            quantity ordered for the specific item referenced. As each operation is completed      *
+//*            a binary tree, with processes in a separate header file, is manipulated.               *
+//*            Variables used by every function are stored in a file named "Variables.H"              *
 //*                                                                                                   *
 //*   USER DEFINED                                                                                    *
-//*    MODULES     : 
-
-//  //*   PROCESS: ******************************************************NEED TO DO THIS*************************
-
+//*    MODULES     : Footer - Prints a footer to signify end of program output                        *
+//*                  Header - Prints a header to signify start of program output                      *
+//*                  newPage - Inserts blank lines until the start of a new page                      *
+//*                  processData - Process each line of data from input file                          *
+//*                  printHeaderForTree - Prints a header for each entire tree output                 *
+//*                  printMessage - Prints message specific to the operation which was just completed *
+//*                  printList - Prints the entire array of elements with correct spacing             *
+//*                  main - Calls each function in order in order to accomplish the desired task      *
 //*                                                                                                   *
 //*****************************************************************************************************
 #include <iostream>
@@ -176,7 +186,7 @@ int main() {
 	dataIN.open("tree_in.txt"); // Open the file containing data
 	dataOUT.open("dataOUT.doc"); // Create and open the file to write data to
 	lineCount = 0; //Initialize lineCount to 0
-	LINESPERPAGE = 54; //Intialize lines per page to 54
+	LINESPERPAGE = 52; //Intialize lines per page to 52
 	Header(dataOUT); // Print data header.
 	processData(); // Process the data from the input file
 	Footer(dataOUT); // Print footer. 

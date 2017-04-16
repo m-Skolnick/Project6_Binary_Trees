@@ -50,8 +50,6 @@ Item ID Number DR777 successfully entered into database.
 
 
 
-
-
 	               JAKE’S HARDWARE INVENTORY REPORT
 	Item             Item                    Quantity       Quantity
 	ID Number        Description             On hand        On Order
@@ -67,8 +65,6 @@ Item ID Number DR777 successfully entered into database.
     SB993            Snow Blower                12              3
     SP198            Shovel                    100             10
     WA022            Washers 1/2 inch          398            122
-
-
 
 
 
@@ -158,8 +154,6 @@ Item ID Number FG081 successfully deleted from database.
 
 
 
-
-
 	               JAKE’S HARDWARE INVENTORY REPORT
 	Item             Item                    Quantity       Quantity
 	ID Number        Description             On hand        On Order
@@ -179,8 +173,6 @@ Item ID Number FG081 successfully deleted from database.
     TM567            Tape Measure 10ft         122             28
     WA022            Washers 1/2 inch          398            122
     WB202            Wheel Barrow               23              7
-
-
 
 
 
